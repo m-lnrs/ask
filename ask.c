@@ -34,6 +34,11 @@ char getch() {
 	return buffer;
 }
 
+// checks if key is backspace
+int backspace(char key) {
+	return key == 8 || key == 127;
+}
+
 int main() {
 	
 	char *ptr = "Computador, você sabe me dizer";
@@ -44,9 +49,31 @@ int main() {
 	
 	do {
 		c = getch();
-		putchar(*(ptr++));
+
+		if (backspace(c) && i > 0) {
+			/* codes
+			 *
+			 * \33[2K - erases the entire line your cursor is currently on
+			 *
+			 * \r - brings your cursor to the beginning of the line
+			 *      \r is for carriage return...
+			 *      carriage returns do not include a newline
+			 *      so cursor remains on the same line but does not erase anything
+			 */
+			printf("\33[2K\r");
+			for (int k = 0; k < (i - 1); k++) {
+				putchar(ptr[k]);
+			}
+		} else if (!backspace(c)) {
+			putchar(*(ptr + i));
+		}
+
 		if (c != ' ') {
-			answer[i++] = c;
+			if (backspace(c) && i > 0) {
+				answer[--i] = c;
+			} else if (!backspace(c)) {
+				answer[i++] = c;
+			}
 		}
 	} while (c != ' ');
 
