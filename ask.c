@@ -9,28 +9,28 @@ char getch() {
 	if(tcgetattr(0, &config) < 0) {
 		perror("tcgetattr()");
 	}
-	
+
 	//change some terminal io settings
 	config.c_lflag &= ~ICANON; //disable buff io
 	config.c_lflag &= ~ECHO;   //set no echo mode
 	config.c_cc[VTIME] = 0;
 	config.c_cc[VMIN] = 1;
-	
+
 	//apply this terminal io settings now
 	if(tcsetattr(0, TCSANOW, &config) < 0) {
 		perror("tcsetattr ICANON");
 	}
-	
+
 	buffer = getchar();
-	
+
 	//restore changes made on terminal io settings?
 	config.c_lflag |= ICANON;
 	config.c_lflag |= ECHO;
-	
+
 	if(tcsetattr(0, TCSADRAIN, &config) < 0) {
 		perror("tcsetattr ~ICANON");
 	}
-	
+
 	return buffer;
 }
 
@@ -40,7 +40,7 @@ int backspace(char key) {
 }
 
 int main() {
-	
+
 	char *ptr = "Computador, você sabe me dizer";
 	char answer[128];
 	char c;
