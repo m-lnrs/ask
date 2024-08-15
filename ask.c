@@ -41,7 +41,8 @@ int backspace(char key) {
 
 int main() {
 
-	char *ptr = "Computador, você sabe me dizer";
+	char holder[] = "Computador, você sabe me dizer";
+	char *ptr = holder;
 	char answer[128];
 	char c;
 
@@ -61,19 +62,19 @@ int main() {
 			 *          so cursor remains on the same line but does not erase anything
 			 */
 			printf("\33[2K\r");
+
 			for (int k = 0; k < (i - 1); k++) {
 				putchar(ptr[k]);
 			}
+
+			answer[--i] = c;
 		} else if (!backspace(c)) {
 			putchar(*(ptr + i));
+			answer[i++] = c;
 		}
 
-		if (c != ' ') {
-			if (backspace(c) && i > 0) {
-				answer[--i] = c;
-			} else if (!backspace(c)) {
-				answer[i++] = c;
-			}
+		if (i == sizeof(holder)) {
+			break;
 		}
 	} while (c != ' ');
 
