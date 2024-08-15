@@ -55,10 +55,10 @@ int main() {
 			 *
 			 * \33[2K - erases the entire line your cursor is currently on
 			 *
-			 * \r - brings your cursor to the beginning of the line
-			 *      \r is for carriage return...
-			 *      carriage returns do not include a newline
-			 *      so cursor remains on the same line but does not erase anything
+			 * \r     - brings your cursor to the beginning of the line
+			 *          \r is for carriage return...
+			 *          carriage returns do not include a newline
+			 *          so cursor remains on the same line but does not erase anything
 			 */
 			printf("\33[2K\r");
 			for (int k = 0; k < (i - 1); k++) {
