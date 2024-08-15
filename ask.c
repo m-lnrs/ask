@@ -76,7 +76,7 @@ int main() {
 		if (i == sizeof(holder)) {
 			break;
 		}
-	} while (c != ' ');
+	} while (c != '\t');
 
 	while (getchar() != '\n');
 
